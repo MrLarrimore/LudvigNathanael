@@ -2,10 +2,7 @@ game.NewProfile = me.ScreenObject.extend({
 	/**	
 	 *  action to perform on state change
 	 */
-	onResetEvent: function() {	
-                //Plays audio.
-                me.audio.playTrack("Preparing_For_Battle");
-            
+	onResetEvent: function() {	            
                 //Adds a new child which is the "new-screen" image.
 		me.game.world.addChild(new me.Sprite(0, 0, me.loader.getImage("new-screen")), -10);
                 
@@ -24,8 +21,8 @@ game.NewProfile = me.ScreenObject.extend({
                 me.game.world.addChild(new (me.Renderable.extend({
                     //Sets the font, font size, and the font color.
                     init: function() {
-                        this._super(me.Renderable, "init", [10, 10, 300, 50]);
-                        this.font = new me.Font("Arial", 26, "green");
+                        this._super(me.Renderable, "init", [50, 100, 300, 50]);
+                        this.font = new me.Font("Arial", 40, "blue");
                     },
                     
                     //Draws the following text.
@@ -46,10 +43,7 @@ game.NewProfile = me.ScreenObject.extend({
 	/**	
 	 *  action to perform when leaving this screen (state change)
 	 */
-	onDestroyEvent: function() {
-            //Stops audio.
-            me.audio.stopTrack();
-            
+	onDestroyEvent: function() {           
             //Sets the IDs to hidden again.
             document.getElementById("input").style.visibility = "hidden";
             document.getElementById("register").style.visibility = "hidden";

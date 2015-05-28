@@ -4,6 +4,15 @@ game.resources = [
 	 * @example
 	 * {name: "example", type:"image", src: "data/img/example.png"},
 	 */
+        
+        {name: "orc", type:"image", src: "data/img/orcSpear.png"},
+        {name: "mario", type:"image", src: "data/img/Mario1.png"},
+        {name: "meta-tiles", type:"image", src: "data/img/meta-tiles.png"},
+        {name: "FD", type:"image", src: "data/img/final_destination.png"},
+        {name: "title-screen", type:"image", src: "data/img/Smash_Title.png"},
+        {name: "load-screen", type:"image", src: "data/img/LoadScreen.jpg"},
+        {name: "new-screen", type:"image", src: "data/img/NewScreen.jpg"},
+        {name: "shop-screen", type:"image", src: "data/img/ShopScreen.jpg"},
 
 	/* Atlases 
 	 * @example

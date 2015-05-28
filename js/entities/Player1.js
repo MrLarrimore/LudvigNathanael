@@ -16,16 +16,16 @@ game.PlayerOneEntity = me.Entity.extend ({
     },
     
     setSuper: function(x, y) {
-        this._super(me.Entity, "init", [x, y, {
-            image: "orc",
-            width: 64,
-            height: 64,
-            spritewidth: "64",
-            spriteheight: "64",
-            getShape: function () {
-                return(new me.Rect(0, 0, 64, 64)).toPolygon();
-            }
-        }]);
+            this._super(me.Entity, "init", [x, y, {
+                image: "orc",
+                width: 64,
+                height: 64,
+                spritewidth: "64",
+                spriteheight: "64",
+                getShape: function () {
+                    return(new me.Rect(0, 0, 64, 64)).toPolygon();
+                }
+            }]);
     },
     
     setPlayerTimers: function() {
@@ -159,11 +159,8 @@ game.PlayerOneEntity = me.Entity.extend ({
     
     collideHandler: function(response) {
         this.now = new Date().getTime();
-        if(response.b.type === "EnemyBaseEntity") {
+        if(response.b.type === "Player2") {
             this.collideWithEnemyBase(response);            
-        }    
-        else if(response.b.type === "EnemyCreep" || response.b.type === "EnemyPlayerEntity") {
-            this.collideWithEnemyTeam(response);
         }        
     },
     

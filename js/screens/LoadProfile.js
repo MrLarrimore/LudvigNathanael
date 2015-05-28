@@ -2,10 +2,7 @@ game.LoadProfile = me.ScreenObject.extend({
 	/**	
 	 *  action to perform on state change
 	 */
-	onResetEvent: function() {
-                //Plays audio.
-                me.audio.playTrack("Preparing_For_Battle");
-                
+	onResetEvent: function() {                
                 //Adds a new child which is the "load-screen" image.
 		me.game.world.addChild(new me.Sprite(0, 0, me.loader.getImage("load-screen")), -10);
                 
@@ -24,8 +21,8 @@ game.LoadProfile = me.ScreenObject.extend({
                 me.game.world.addChild(new (me.Renderable.extend({
                     //Sets the font, font size, and the font color.
                     init: function() {
-                        this._super(me.Renderable, "init", [10, 10, 300, 50]);
-                        this.font = new me.Font("Arial", 26, "green");
+                        this._super(me.Renderable, "init", [-125, 425, 300, 50]);
+                        this.font = new me.Font("Arial", 40, "black");
                     },
                     
                     //Draws the following text.

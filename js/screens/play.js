@@ -8,13 +8,13 @@ game.PlayScreen = me.ScreenObject.extend({
             //Starts the game at Level 1
             me.levelDirector.loadLevel("FD");
             
-            //Starting gold  amount based on exp2's level.
-            game.data.gold += Number(game.data.exp2 * 5);
-            
             //Sets player at 350 pixels right and 0 pixels down.
             this.resetPlayer(350, 0);
                 
-            //Variables set that are used throught out the game (Lines 18-34).               
+            //Variables set that are used throught out the game (Lines 14-34).               
+            var experienceManager = me.pool.pull("ExperienceManager", 0, 0, {});
+            me.game.world.addChild(experienceManager, 0);
+            
             var heroDeathManager = me.pool.pull("HeroDeathManager", 0, 0, {});
             me.game.world.addChild(heroDeathManager, 0);
             
@@ -48,7 +48,10 @@ game.PlayScreen = me.ScreenObject.extend({
         
         //When the player gets reset, these functions are carried out.
         resetPlayer: function(x, y) {
-            game.data.player = me.pool.pull("player", x, y, {});
-            me.game.world.addChild(game.data.player, 5);
+            game.data.player1 = me.pool.pull("player1", x, y, {});
+            me.game.world.addChild(game.data.player1, 5);
+            
+            game.data.player2 = me.pool.pull("player2", x, y, {});
+            me.game.world.addChild(game.data.player2, 5);
         }
 });
