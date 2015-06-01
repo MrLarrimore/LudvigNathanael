@@ -17,15 +17,23 @@ game.PlayerOneEntity = me.Entity.extend ({
     
     setSuper: function(x, y) {
             this._super(me.Entity, "init", [x, y, {
-                image: "orc",
-                width: 64,
-                height: 64,
-                spritewidth: "64",
-                spriteheight: "64",
+                image: "mario",
+                width: 72,
+                height: 72,
+                spritewidth: "72",
+                spriteheight: "72",
                 getShape: function () {
-                    return(new me.Rect(0, 0, 64, 64)).toPolygon();
+                    return(new me.Rect(0, 0, 52, 52)).toPolygon();
                 }
             }]);
+        
+        //Binds the movement keys.
+        me.input.bindKey(me.input.KEY.D, "right1");
+        me.input.bindKey(me.input.KEY.A, "left1");
+        me.input.bindKey(me.input.KEY.W, "jump1");
+        me.input.bindKey(me.input.KEY.R, "regularAttack1");
+        me.input.bindKey(me.input.KEY.T, "specialAttack1");
+        me.input.bindKey(me.input.KEY.Y, "block1");
     },
     
     setPlayerTimers: function() {
@@ -48,9 +56,9 @@ game.PlayerOneEntity = me.Entity.extend ({
     },
     
     addAnimation: function() {
-        this.renderable.addAnimation("idle", [130]);
-        this.renderable.addAnimation("walk", [143, 144, 145, 146, 147, 148, 149, 150, 151], 80);
-        this.renderable.addAnimation("attack", [91, 92, 93, 94, 95, 96, 97, 98], 80);
+        this.renderable.addAnimation("idle", [8]);
+        this.renderable.addAnimation("walk", [0,1,2,3,4,5,6,7], 80);
+        this.renderable.addAnimation("attack", [9,10,11], 80);
     },
     
     update: function(delta){
@@ -76,21 +84,21 @@ game.PlayerOneEntity = me.Entity.extend ({
     },
     
     checkKeyPressesAndMovement: function() {
-        if(me.input.isKeyPressed("right")) {
+        if(me.input.isKeyPressed("right1")) {
             this.moveRight();
         }
-        else if(me.input.isKeyPressed("left")) {            
+        else if(me.input.isKeyPressed("left1")) {            
             this.moveLeft();
         }
         else {
             this.body.vel.x = 0;
         }
         
-        if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling) {
+        if(me.input.isKeyPressed("jump1") && !this.body.jumping && !this.body.falling) {
             this.jump();
         }
         
-        this.attacking = me.input.isKeyPressed("attack");
+        this.attacking = me.input.isKeyPressed("regularAttack1");
     },
     
     moveRight: function() {
@@ -155,6 +163,7 @@ game.PlayerOneEntity = me.Entity.extend ({
     
     loseHealth: function(damage) {
         this.health = this.health - damage;
+        console.log("Mario:",this.health);
     },
     
     collideHandler: function(response) {

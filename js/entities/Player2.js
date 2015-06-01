@@ -17,15 +17,23 @@ game.PlayerTwoEntity = me.Entity.extend ({
     
     setSuper: function(x, y) {
         this._super(me.Entity, "init", [x, y, {
-            image: "orc",
-            width: 64,
-            height: 64,
-            spritewidth: "64",
-            spriteheight: "64",
+            image: "link",
+            width: 72,
+            height: 72,
+            spritewidth: "72",
+            spriteheight: "72",
             getShape: function () {
-                return(new me.Rect(0, 0, 64, 64)).toPolygon();
+                return(new me.Rect(0, 0, 42, 52)).toPolygon();
             }
         }]);
+    
+        //Binds the movement keys.
+        me.input.bindKey(me.input.KEY.RIGHT, "right2");
+        me.input.bindKey(me.input.KEY.LEFT, "left2");
+        me.input.bindKey(me.input.KEY.UP, "jump2");
+        me.input.bindKey(me.input.KEY.I, "regularAttack2");
+        me.input.bindKey(me.input.KEY.O, "specialAttack2");
+        me.input.bindKey(me.input.KEY.P, "block2");
     },
     
     setPlayerTimers: function() {
@@ -48,9 +56,9 @@ game.PlayerTwoEntity = me.Entity.extend ({
     },
     
     addAnimation: function() {
-        this.renderable.addAnimation("idle", [130]);
-        this.renderable.addAnimation("walk", [143, 144, 145, 146, 147, 148, 149, 150, 151], 80);
-        this.renderable.addAnimation("attack", [91, 92, 93, 94, 95, 96, 97, 98], 80);
+        this.renderable.addAnimation("idle", [0]);
+        this.renderable.addAnimation("walk", [1,2,3,4,5,6], 80);
+        this.renderable.addAnimation("attack", [7,8,9,10,11,12], 80);
     },
     
     update: function(delta){
@@ -76,21 +84,21 @@ game.PlayerTwoEntity = me.Entity.extend ({
     },
     
     checkKeyPressesAndMovement: function() {
-        if(me.input.isKeyPressed("right")) {
+        if(me.input.isKeyPressed("right2")) {
             this.moveRight();
         }
-        else if(me.input.isKeyPressed("left")) {            
+        else if(me.input.isKeyPressed("left2")) {            
             this.moveLeft();
         }
         else {
             this.body.vel.x = 0;
         }
         
-        if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling) {
+        if(me.input.isKeyPressed("jump2") && !this.body.jumping && !this.body.falling) {
             this.jump();
         }
         
-        this.attacking = me.input.isKeyPressed("attack");
+        this.attacking = me.input.isKeyPressed("regularAttack2");
     },
     
     moveRight: function() {
@@ -155,34 +163,14 @@ game.PlayerTwoEntity = me.Entity.extend ({
     
     loseHealth: function(damage) {
         this.health = this.health - damage;
+        console.log("Link",this.health);
     },
     
     collideHandler: function(response) {
         this.now = new Date().getTime();
-        if(response.b.type === "Player2") {
-            this.collideWithEnemyBase(response);            
+        if(response.b.type === "Player1") {
+            this.collideWithEnemyTeam(response);            
         }           
-    },
-    
-    collideWithEnemyBase: function(response) {
-        var ydif = this.pos.y - response.b.pos.y;
-        var xdif = this.pos.x - response.b.pos.x;
-            
-        if(ydif < -40 && xdif < 70  && xdif > -35) {
-            this.body.falling = false;
-            this.body.vel.y = - 1;
-        }
-        else if(xdif > -35 && this.facing === "right" && (xdif < 0)) {
-            this.body.vel.x = 0;
-        }
-        else if(xdif < 70 && this.facing === "left" && (xdif > 0)) {
-            this.body.vel.x = 0;
-        }
-            
-        if(this.renderable.isCurrentAnimation("attack") && this.now - this.lastHit >= game.data.playerAttackTimer) {
-            this.lastHit = this.now;
-            response.b.loseHealth(game.data.playerAttack);               
-        }
     },
     
     collideWithEnemyTeam: function(response) {
